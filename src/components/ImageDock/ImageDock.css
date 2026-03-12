@@ -1,0 +1,11 @@
+.image-display {
+    height: 20vh;
+    width: auto;
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+}
+.image-dock {
+    display: flex;
+    flex-direction: column;
+}

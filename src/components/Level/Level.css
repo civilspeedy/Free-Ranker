@@ -1,0 +1,29 @@
+.level {
+    background-color: white;
+    height: fit-content;
+    max-height: 50vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    border: solid black 1vb;
+    align-self: center;
+}
+
+.item-div {
+    display: flex;
+    overflow-y: scroll;
+}
+.level-item {
+    height: 15vh;
+}
+
+.side {
+    display: flex;
+    width: 10%;
+    height: 100%;
+    align-self: center;
+    text-align: center;
+    font-size: 10vh;
+    margin: 0;
+    border-right: solid black 1vb;
+}
