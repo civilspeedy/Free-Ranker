@@ -3,6 +3,7 @@ import type { JSX } from 'preact/jsx-runtime';
 import './Level.css';
 import DeleteLevel from '../DeleteLevel/DeleteLevel';
 import { deleteIndex, sendImage } from '../../signals';
+import EditLevel from '../EditLevel/EditLevel';
 
 type LevelProps = {
     readonly label: string;
@@ -44,6 +45,7 @@ export default function Level({
             >
                 <p>{label}</p>
                 <DeleteLevel index={index} />
+                <EditLevel />
             </div>
             <div className="item-div">
                 {items.map((image, index) => (

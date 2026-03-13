@@ -35,7 +35,7 @@ export function App(): JSX.Element {
 
     useEffect(() => {
         if (deleteIndex.value !== undefined) {
-            if (levels.length === 0) {
+            if (levels.length === 1) {
                 setLevels([]);
             } else {
                 setLevels((prev) => [

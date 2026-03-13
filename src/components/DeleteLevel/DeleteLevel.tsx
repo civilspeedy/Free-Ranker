@@ -3,6 +3,7 @@ import Trash from '../../assets/trash-svgrepo-com.svg';
 import * as m from 'motion/react-m';
 import './DeleteLevel.css';
 import { deleteIndex } from '../../signals';
+import { ButtonVariants } from '../../Animations';
 
 type DeleteLevelProps = {
     readonly index: number;
@@ -15,10 +16,11 @@ export default function DeleteLevel({ index }: DeleteLevelProps): JSX.Element {
 
     return (
         <m.img
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
-            whileHover={{ opacity: 1, scale: 1.5 }}
-            whileTap={{ scale: 0.8 }}
+            variants={ButtonVariants}
+            initial="initial"
+            animate="animate"
+            whileTap="whileTap"
+            whileHover="whileHover"
             onClick={handlePress}
             src={Trash}
         />
