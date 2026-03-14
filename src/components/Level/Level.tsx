@@ -18,6 +18,8 @@ export default function Level({
     index,
 }: LevelProps): JSX.Element {
     const [items, setItems] = useState<readonly string[]>([]);
+    const [labelText, setLabelText] = useState(label);
+    const [colourValue, setColourValue] = useState(colour);
 
     useEffect(() => {
         if (sendImage.value !== undefined) {
@@ -40,12 +42,15 @@ export default function Level({
     return (
         <div className="level">
             <div
-                style={{ backgroundColor: colour, color: fontColour }}
+                style={{ backgroundColor: colourValue, color: fontColour }}
                 className="side"
             >
-                <p>{label}</p>
+                <p>{labelText}</p>
                 <DeleteLevel index={index} />
-                <EditLevel />
+                <EditLevel
+                    setLevelLabel={setLabelText}
+                    setLevelColour={setColourValue}
+                />
             </div>
             <div className="item-div">
                 {items.map((image, index) => (
