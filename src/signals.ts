@@ -61,3 +61,11 @@ export function removeLevel(index: number): void {
 
     LevelSignal.value = [...left, ...right];
 }
+
+export function editRank(index: number, rank: string): void {
+    LevelSignal.value[index].rank = rank;
+}
+
+export function editColour(index: number, colour: string): void {
+    LevelSignal.value[index].colour = colour;
+}

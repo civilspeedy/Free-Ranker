@@ -1,0 +1,22 @@
+#level {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+}
+
+.level-rank {
+    margin: 0;
+    width: fit-content;
+    font-size: 10vh;
+    padding: 3vh;
+    cursor: pointer;
+}
+
+#images {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+}
