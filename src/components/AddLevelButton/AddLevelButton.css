@@ -1,0 +1,8 @@
+.add-level-button {
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    cursor: pointer;
+    margin: 10px;
+}

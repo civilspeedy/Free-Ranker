@@ -46,7 +46,7 @@ export function addLevel(): void {
         colour = DEFUALT_COLOURS[l];
     }
 
-    const newLevel: LevelData = { rank, colour, images: [] };
+    const newLevel: LevelData = { rank, colour, images: [], index: l };
 
     LevelSignal.value = [...LevelSignal.value, newLevel];
 }
