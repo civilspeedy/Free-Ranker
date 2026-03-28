@@ -1,0 +1,25 @@
+#edit-level-button {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    cursor: pointer;
+}
+
+#edit-modal {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+#option-div {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}

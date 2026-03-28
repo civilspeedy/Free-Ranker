@@ -1,0 +1,24 @@
+.delete-level-button {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    cursor: pointer;
+    color: white;
+}
+
+#delete-modal {
+    position: absolute;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#option-div {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}

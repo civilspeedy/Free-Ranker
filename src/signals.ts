@@ -3,15 +3,15 @@ import type { LevelData } from './types';
 
 export const LevelSignal = signal<LevelData[]>([]);
 
-const DEFUALT_COLOURS: readonly string[] = [
-    'gold',
-    'darkgreen',
-    'green',
-    'lightgreen',
-    'yellow',
-    'orange',
-    'red',
-];
+const DEFUALT_COLOURS = {
+    gold: true,
+    darkgreen: false,
+    green: false,
+    lightgreen: true,
+    yellow: true,
+    orange: true,
+    red: false,
+} as const;
 
 function getLen(): number {
     return LevelSignal.value.length;
@@ -29,6 +29,10 @@ function randomColour(): string {
     return c;
 }
 
+export function getImages(index: number): string[] {
+    return LevelSignal.value[index].images;
+}
+
 export function addLevel(): void {
     console.log('adding level');
     const l = getLen();
@@ -39,14 +43,26 @@ export function addLevel(): void {
         rank = String.fromCharCode(64 + l);
     }
 
+    const colours = Object.keys(DEFUALT_COLOURS);
+    const fontColours = Object.values(DEFUALT_COLOURS);
+
     let colour: string;
-    if (l >= DEFUALT_COLOURS.length) {
+    let fontColour: string;
+    if (l >= colours.length) {
         colour = randomColour();
+        fontColour = randomColour();
     } else {
-        colour = DEFUALT_COLOURS[l];
+        colour = colours[l];
+        fontColour = fontColours[l] ? 'black' : 'white';
     }
 
-    const newLevel: LevelData = { rank, colour, images: [], index: l };
+    const newLevel: LevelData = {
+        rank,
+        colour,
+        fontColour,
+        images: [],
+        index: l,
+    };
 
     LevelSignal.value = [...LevelSignal.value, newLevel];
 }
@@ -62,10 +78,31 @@ export function removeLevel(index: number): void {
     LevelSignal.value = [...left, ...right];
 }
 
-export function editRank(index: number, rank: string): void {
-    LevelSignal.value[index].rank = rank;
+export function getRank(index: number): string {
+    return LevelSignal.value[index].rank;
 }
 
-export function editColour(index: number, colour: string): void {
-    LevelSignal.value[index].colour = colour;
+export function changeRank(index: number, rank: string): void {
+    LevelSignal.value = LevelSignal.value.map((level, i) =>
+        i === index ? { ...level, rank } : level,
+    );
+}
+
+export function getColour(index: number): string {
+    return LevelSignal.value[index].colour;
+}
+
+export function changeColour(index: number, colour: string): void {
+    LevelSignal.value = LevelSignal.value.map((level, i) =>
+        i === index ? { ...level, colour } : level,
+    );
+}
+
+export function getFontColour(index: number): string {
+    return LevelSignal.value[index].fontColour;
+}
+export function changeFontColour(index: number, fontColour: string): void {
+    LevelSignal.value = LevelSignal.value.map((level, i) =>
+        i === index ? { ...level, fontColour } : level,
+    );
 }

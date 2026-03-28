@@ -1,44 +1,55 @@
 import type { JSX } from 'preact/jsx-runtime';
 import type { LevelData } from '../../types';
-import { removeLevel } from '../../signals';
 import './LevelComponent.css';
-import { useState } from 'preact/hooks';
+import DeleteLevel from '../buttons/DeleteLevelButton/DeleteLevelButton';
+import EditLevel from '../buttons/EditLevelButton/EditLevelButton';
+import { useEffect, useState } from 'preact/hooks';
 
 export default function LevelComponent({
     rank,
     colour,
+    fontColour,
     images,
     index,
 }: LevelData): JSX.Element {
-    const DeleteLevel = (): JSX.Element => {
-        return <a onClick={() => removeLevel(index)}>Delete</a>;
-    };
+    const [rankSize, setRankSize] = useState('');
 
-    const Rank = (): JSX.Element => {
-        const [state, setState] = useState(false);
-
-        const handleClick = () => {
-            setState((prev) => !prev);
-            // needs to not change if user hasn't input
-        };
-
-        return state ? (
-            <textarea className="level-rank" onClick={handleClick} />
-        ) : (
-            <a
-                className="level-rank"
-                onClick={handleClick}
-                style={{ backgroundColor: colour }}
-            >
-                {rank}
-            </a>
-        );
-    };
+    useEffect(() => {
+        switch (rank.length) {
+            case 1:
+            case 2:
+            case 3:
+                setRankSize('10vh');
+                break;
+            case 4:
+                setRankSize('8vh');
+                break;
+            case 5:
+                setRankSize('7vh');
+                break;
+            case 6:
+                setRankSize('6vh');
+                break;
+            default:
+                setRankSize('3vh');
+                break;
+        }
+    }, [rank]);
 
     return (
         <div id="level">
-            <Rank />
-            <DeleteLevel />
+            <p
+                className="level-rank"
+                style={{
+                    backgroundColor: colour,
+                    fontSize: rank.length < 4 ? null : rankSize,
+                    color: fontColour,
+                }}
+            >
+                {rank}
+            </p>
+            <EditLevel index={index} />
+            <DeleteLevel index={index} />
             <div id="images">
                 {images.map((image, index) => (
                     <img src={image} key={index} />

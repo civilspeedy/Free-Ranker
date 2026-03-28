@@ -1,6 +1,6 @@
 import type { JSX } from 'preact/jsx-runtime';
-import { addLevel } from '../../signals';
 import './AddLevelButton.css';
+import { addLevel } from '../../../signals';
 
 export default function AddLevelButton(): JSX.Element {
     const handleClick = (): void => {

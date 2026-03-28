@@ -9,7 +9,7 @@ export default function UploadButton(): JSX.Element {
         const handleClick = (): void => setState((prev) => !prev);
         return (
             <a className="upload-button" onClick={handleClick}>
-                Upload
+                Upload Schema
             </a>
         );
     };
@@ -20,9 +20,13 @@ export default function UploadButton(): JSX.Element {
         return (
             <div className="upload-modal">
                 <input type="file" accept=".json" />
-                <div>
-                    <a onClick={handleSubmit}>Submit</a>
-                    <a onClick={handleClose}>Close</a>
+                <div id="option-div">
+                    <a className="button" onClick={handleSubmit}>
+                        Submit
+                    </a>
+                    <a className="button" onClick={handleClose}>
+                        Close
+                    </a>
                 </div>
             </div>
         );

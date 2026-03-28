@@ -1,10 +1,10 @@
 import { useEffect } from 'preact/hooks';
 import './app.css';
-import AddLevelButton from './components/AddLevelButton/AddLevelButton';
+import AddLevelButton from './components/buttons/AddLevelButton/AddLevelButton';
 import { LevelSignal } from './signals';
-import UploadButton from './components/UploadButton/UploadButton';
+import UploadButton from './components/buttons/UploadButton/UploadButton';
 import LevelComponent from './components/LevelComponent/LevelComponent';
-import DownloadButton from './components/DownloadButton/DownloadButton';
+import DownloadButton from './components/buttons/DownloadButton/DownloadButton';
 
 export default function App() {
     useEffect(() => {
@@ -20,6 +20,7 @@ export default function App() {
                 <LevelComponent
                     index={index}
                     key={index}
+                    fontColour={level.fontColour}
                     rank={level.rank}
                     images={level.images}
                     colour={level.colour}
