@@ -5,6 +5,7 @@ import { LevelSignal } from './signals';
 import UploadButton from './components/buttons/UploadButton/UploadButton';
 import LevelComponent from './components/LevelComponent/LevelComponent';
 import DownloadButton from './components/buttons/DownloadButton/DownloadButton';
+import ImageDock from './components/ImageDock/ImageDock';
 
 export default function App() {
     useEffect(() => {
@@ -27,6 +28,8 @@ export default function App() {
                 />
             ))}
             <AddLevelButton />
+
+            <ImageDock />
         </>
     );
 }

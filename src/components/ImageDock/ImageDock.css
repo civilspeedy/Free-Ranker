@@ -1,0 +1,23 @@
+.dock-image {
+    width: auto;
+    max-height: 20vh;
+    cursor: pointer;
+}
+
+#image-dock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#images {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.image-capsule {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}

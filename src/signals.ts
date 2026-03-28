@@ -106,3 +106,15 @@ export function changeFontColour(index: number, fontColour: string): void {
         i === index ? { ...level, fontColour } : level,
     );
 }
+
+export function getRanks(): string[] {
+    return LevelSignal.value.map((level) => level.rank);
+}
+
+export function addImage(rank: string, image: string): void {
+    LevelSignal.value = LevelSignal.value.map((level) =>
+        level.rank === rank
+            ? { ...level, images: [...level.images, image] }
+            : level,
+    );
+}

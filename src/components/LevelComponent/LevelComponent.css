@@ -17,7 +17,12 @@
 
 #images {
     width: 100%;
-    height: fit-content;
+    height: auto;
     display: flex;
     flex-direction: row;
+}
+
+#images img {
+    height: 20vh;
+    width: auto;
 }
