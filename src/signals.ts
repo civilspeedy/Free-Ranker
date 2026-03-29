@@ -2,6 +2,7 @@ import { computed, signal } from '@preact/signals';
 import type { Image, LevelData, RankAndImageIndex } from './types';
 
 export const LevelSignal = signal<LevelData[]>([]);
+export const AllImages = signal<Image[]>([]);
 export const NextImgId = signal<number>(0);
 
 const DEFUALT_COLOURS = {
@@ -108,7 +109,6 @@ export function changeFontColour(index: number, fontColour: string): void {
     );
 }
 
-// signals.ts
 export const ranks = computed(() => LevelSignal.value.map((l) => l.rank));
 
 function imageInOtherLevel(

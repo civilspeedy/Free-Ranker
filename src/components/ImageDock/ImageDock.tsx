@@ -2,7 +2,7 @@ import type { TargetedEvent } from 'preact';
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './ImageDock.css';
-import { addImage, NextImgId, ranks } from '../../signals';
+import { addImage, AllImages, NextImgId, ranks } from '../../signals';
 import type { Image } from '../../types';
 
 export default function ImageDock(): JSX.Element {
@@ -28,6 +28,7 @@ export default function ImageDock(): JSX.Element {
             return { id, base64 };
         });
 
+        AllImages.value = [...AllImages.value, ...images];
         setImages((prev) => [...prev, ...images]);
     };
 
