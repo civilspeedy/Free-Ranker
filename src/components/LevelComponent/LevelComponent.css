@@ -1,0 +1,28 @@
+#level {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+}
+
+.level-rank {
+    margin: 0;
+    width: fit-content;
+    font-size: 10vh;
+    padding: 3vh;
+    cursor: pointer;
+    text-wrap: pretty;
+}
+
+#images {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#images img {
+    height: 20vh;
+    width: auto;
+}

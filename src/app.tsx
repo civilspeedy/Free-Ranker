@@ -1,76 +1,35 @@
-import type { JSX } from 'preact/jsx-runtime';
+import { useEffect } from 'preact/hooks';
 import './app.css';
-import { useEffect, useState } from 'preact/hooks';
-import Level from './components/Level/Level';
+import AddLevelButton from './components/buttons/AddLevelButton/AddLevelButton';
+import { LevelSignal } from './signals';
+import UploadButton from './components/buttons/UploadButton/UploadButton';
+import LevelComponent from './components/LevelComponent/LevelComponent';
+import DownloadButton from './components/buttons/DownloadButton/DownloadButton';
 import ImageDock from './components/ImageDock/ImageDock';
-import AddLevel from './components/AddLevel/AddLevel';
-import { domAnimation, LazyMotion } from 'motion/react';
-import { deleteIndex, globalLevels } from './signals';
 
-const colours: readonly string[] = [
-    'gold',
-    'darkgreen',
-    'green',
-    'lightgreen',
-    'yellow',
-    'orange',
-    'red',
-];
-
-const FontColoursIsBlack: boolean[] = [
-    true,
-    false,
-    false,
-    true,
-    true,
-    true,
-    false,
-];
-
-if (FontColoursIsBlack.length !== colours.length)
-    console.error('Colour arrays do not align');
-
-export function App(): JSX.Element {
-    const [levels, setLevels] = useState<readonly string[]>([]);
-
+export default function App() {
     useEffect(() => {
-        if (deleteIndex.value !== undefined) {
-            if (levels.length === 1) {
-                setLevels([]);
-            } else {
-                setLevels((prev) => [
-                    ...prev.slice(0, deleteIndex.value),
-                    ...prev.slice(
-                        deleteIndex.value ? deleteIndex.value + 1 : 0,
-                    ),
-                ]);
-            }
-
-            deleteIndex.value = undefined;
-        }
-    }, [deleteIndex.value]);
-
-    useEffect(() => {
-        globalLevels.value = levels;
-    }, [levels]);
-
+        console.log(LevelSignal.value.length);
+    }, [LevelSignal.value]);
     return (
-        <LazyMotion features={domAnimation}>
-            <div className="page">
-                <AddLevel levels={levels} setLevels={setLevels} />
-                {levels.map((label, index) => (
-                    <Level
-                        index={index}
-                        label={label}
-                        colour={index < colours.length ? colours[index] : 'red'}
-                        fontColour={
-                            FontColoursIsBlack[index] ? 'black' : 'white'
-                        }
-                        key={index}
-                    />
-                ))}
-                <ImageDock />
+        <>
+            <div className="top-corner">
+                <UploadButton />
+                <DownloadButton />
             </div>
-        </LazyMotion>
+            {LevelSignal.value.map((level, index) => (
+                <LevelComponent
+                    index={index}
+                    key={index}
+                    fontColour={level.fontColour}
+                    rank={level.rank}
+                    images={level.images}
+                    colour={level.colour}
+                />
+            ))}
+            <AddLevelButton />
+
+            <ImageDock />
+        </>
     );
 }

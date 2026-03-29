@@ -1,51 +1,91 @@
+import type { TargetedEvent } from 'preact';
+import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './ImageDock.css';
-import { useState } from 'preact/hooks';
-import DockImage from '../DockImage/DockImage';
-import type { TargetedClipboardEvent, TargetedEvent } from 'preact';
+import { addImage, NextImgId, ranks } from '../../signals';
+import type { Image } from '../../types';
 
 export default function ImageDock(): JSX.Element {
-    const [images, setImages] = useState<readonly string[]>([]);
+    const [images, setImages] = useState<Image[]>([]);
 
-    const handleUpload = (files: FileList | null) => {
-        if (files) {
-            const fileArray = Array.from(files);
+    const toBase64 = (file: File) =>
+        new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (e) => reject(e);
+        });
 
-            const imageArray: string[] = [];
-            for (const file of fileArray) {
-                imageArray.push(URL.createObjectURL(file));
-            }
+    const handleInput = async (
+        e: TargetedEvent<HTMLInputElement, Event>,
+    ): Promise<void> => {
+        const files = e.currentTarget.files;
+        if (!files) return;
+        const results = await Promise.all(Array.from(files).map(toBase64));
+        const images: Image[] = results.map((base64) => {
+            const id = NextImgId.value;
+            NextImgId.value = id + 1;
+            return { id, base64 };
+        });
 
-            setImages((prev) => [...prev, ...imageArray]);
-        }
+        setImages((prev) => [...prev, ...images]);
     };
 
-    const PasteArea = (): JSX.Element => {
-        const handlePaste = (
-            val: TargetedClipboardEvent<HTMLDivElement>,
-        ): void => {
-            const files = val.clipboardData?.files;
-            handleUpload(files ? files : null);
+    type ImageProps = { readonly source: Image };
+    const Image = ({ source }: ImageProps): JSX.Element => {
+        const [state, setState] = useState(false);
+        const [selection, setSelection] = useState(ranks.value[0]);
+
+        const handleClick = (): void => {
+            setState((prev) => !prev);
         };
+
+        const handleSelect = (
+            e: TargetedEvent<HTMLSelectElement, Event>,
+        ): void => {
+            setSelection(e.currentTarget.value);
+        };
+
+        const handleOk = (): void => {
+            addImage(selection, source);
+        };
+
         return (
-            <div onPaste={handlePaste}>Cntrl/CMD+V to paste from clipboard</div>
+            <div className="image-capsule">
+                <img
+                    className="dock-image"
+                    src={source.base64}
+                    onClick={handleClick}
+                />
+                <div>
+                    {state && (
+                        <>
+                            <select value={selection} onChange={handleSelect}>
+                                {ranks.value.map((rank, index) => (
+                                    <option key={index} value={rank}>
+                                        {rank}
+                                    </option>
+                                ))}
+                            </select>
+                            <a onClick={handleOk}>Ok</a>
+                        </>
+                    )}
+                </div>
+            </div>
         );
     };
 
     return (
-        <div className="ImageDock">
+        <div id="image-dock">
             <input
                 multiple
                 type="file"
-                accept="image.png, image/jpeg"
-                onChange={(files: TargetedEvent<HTMLInputElement, Event>) =>
-                    handleUpload(files.currentTarget.files)
-                }
+                accept=".png, .jpeg, .svg"
+                onChange={handleInput}
             />
-            <PasteArea />
-            <div className="image-display">
+            <div id="images">
                 {images.map((image, index) => (
-                    <DockImage source={image} key={index} />
+                    <Image source={image} key={index} />
                 ))}
             </div>
         </div>
