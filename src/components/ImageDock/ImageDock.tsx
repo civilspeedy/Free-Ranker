@@ -2,10 +2,11 @@ import type { TargetedEvent } from 'preact';
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './ImageDock.css';
-import { addImage, getRanks } from '../../signals';
+import { addImage, NextImgId, ranks } from '../../signals';
+import type { Image } from '../../types';
 
 export default function ImageDock(): JSX.Element {
-    const [images, setImages] = useState<string[]>([]);
+    const [images, setImages] = useState<Image[]>([]);
 
     const toBase64 = (file: File) =>
         new Promise<string>((resolve, reject) => {
@@ -21,13 +22,19 @@ export default function ImageDock(): JSX.Element {
         const files = e.currentTarget.files;
         if (!files) return;
         const results = await Promise.all(Array.from(files).map(toBase64));
-        setImages((prev) => [...prev, ...results]);
+        const images: Image[] = results.map((base64) => {
+            const id = NextImgId.value;
+            NextImgId.value = id + 1;
+            return { id, base64 };
+        });
+
+        setImages((prev) => [...prev, ...images]);
     };
 
-    type ImageProps = { readonly source: string };
+    type ImageProps = { readonly source: Image };
     const Image = ({ source }: ImageProps): JSX.Element => {
         const [state, setState] = useState(false);
-        const [selection, setSelection] = useState(getRanks()[0]);
+        const [selection, setSelection] = useState(ranks.value[0]);
 
         const handleClick = (): void => {
             setState((prev) => !prev);
@@ -41,22 +48,20 @@ export default function ImageDock(): JSX.Element {
 
         const handleOk = (): void => {
             addImage(selection, source);
-            // needs to check if in other rank
-            // needs to check if image is already in array
         };
 
         return (
             <div className="image-capsule">
                 <img
                     className="dock-image"
-                    src={source}
+                    src={source.base64}
                     onClick={handleClick}
                 />
                 <div>
                     {state && (
                         <>
                             <select value={selection} onChange={handleSelect}>
-                                {getRanks().map((rank, index) => (
+                                {ranks.value.map((rank, index) => (
                                     <option key={index} value={rank}>
                                         {rank}
                                     </option>

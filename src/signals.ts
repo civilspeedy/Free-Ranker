@@ -1,7 +1,8 @@
-import { signal } from '@preact/signals';
-import type { LevelData } from './types';
+import { computed, signal } from '@preact/signals';
+import type { Image, LevelData, RankAndImageIndex } from './types';
 
 export const LevelSignal = signal<LevelData[]>([]);
+export const NextImgId = signal<number>(0);
 
 const DEFUALT_COLOURS = {
     gold: true,
@@ -30,7 +31,7 @@ function randomColour(): string {
 }
 
 export function getImages(index: number): string[] {
-    return LevelSignal.value[index].images;
+    return LevelSignal.value[index].images.map((image) => image.base64);
 }
 
 export function addLevel(): void {
@@ -107,11 +108,44 @@ export function changeFontColour(index: number, fontColour: string): void {
     );
 }
 
-export function getRanks(): string[] {
-    return LevelSignal.value.map((level) => level.rank);
+// signals.ts
+export const ranks = computed(() => LevelSignal.value.map((l) => l.rank));
+
+function imageInOtherLevel(
+    ignoreRank: string,
+    id: number,
+): RankAndImageIndex | null {
+    for (const level of LevelSignal.value) {
+        if (level.rank !== ignoreRank) {
+            for (const image of level.images) {
+                if (image.id === id)
+                    return {
+                        rank: level.index,
+                        image: level.images.indexOf(image),
+                    };
+            }
+        }
+    }
+    return null;
 }
 
-export function addImage(rank: string, image: string): void {
+function removeImage(i: RankAndImageIndex): void {
+    const images = LevelSignal.value[i.rank].images;
+    const left = images.slice(0, i.image);
+    const right = images.slice(i.image + 1);
+    const newImages = [...left, ...right];
+
+    LevelSignal.value = LevelSignal.value.map((level) =>
+        level.index === i.rank ? { ...level, images: newImages } : level,
+    );
+}
+
+export function addImage(rank: string, image: Image): void {
+    const isInOther = imageInOtherLevel(rank, image.id);
+    if (isInOther !== null) {
+        removeImage(isInOther);
+    }
+
     LevelSignal.value = LevelSignal.value.map((level) =>
         level.rank === rank
             ? { ...level, images: [...level.images, image] }

@@ -4,12 +4,12 @@ import './LevelComponent.css';
 import DeleteLevel from '../buttons/DeleteLevelButton/DeleteLevelButton';
 import EditLevel from '../buttons/EditLevelButton/EditLevelButton';
 import { useEffect, useState } from 'preact/hooks';
+import { getImages } from '../../signals';
 
 export default function LevelComponent({
     rank,
     colour,
     fontColour,
-    images,
     index,
 }: LevelData): JSX.Element {
     const [rankSize, setRankSize] = useState('');
@@ -51,7 +51,7 @@ export default function LevelComponent({
             <EditLevel index={index} />
             <DeleteLevel index={index} />
             <div id="images">
-                {images.map((image, index) => (
+                {getImages(index).map((image, index) => (
                     <img src={image} key={index} />
                 ))}
             </div>
