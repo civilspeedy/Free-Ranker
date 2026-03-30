@@ -1,5 +1,5 @@
 import { computed, signal } from '@preact/signals';
-import type { Image, LevelData, RankAndImageIndex } from './types';
+import type { Data, Image, LevelData, RankAndImageIndex } from './types';
 
 export const LevelSignal = signal<LevelData[]>([]);
 export const AllImages = signal<Image[]>([]);
@@ -111,6 +111,13 @@ export function changeFontColour(index: number, fontColour: string): void {
 
 export const ranks = computed(() => LevelSignal.value.map((l) => l.rank));
 
+function getRankIndex(rank: string): number {
+    for (const level of LevelSignal.value) {
+        if (level.rank === rank) return level.index;
+    }
+    return -1;
+}
+
 function imageInOtherLevel(
     ignoreRank: string,
     id: number,
@@ -140,8 +147,18 @@ function removeImage(i: RankAndImageIndex): void {
     );
 }
 
+function checkDuplicate(rankIndex: number, imageId: number): boolean {
+    for (const image of LevelSignal.value[rankIndex].images) {
+        if (image.id === imageId) return true;
+    }
+    return false;
+}
+
 export function addImage(rank: string, image: Image): void {
+    if (checkDuplicate(getRankIndex(rank), image.id)) return;
+
     const isInOther = imageInOtherLevel(rank, image.id);
+
     if (isInOther !== null) {
         removeImage(isInOther);
     }
@@ -151,4 +168,10 @@ export function addImage(rank: string, image: Image): void {
             ? { ...level, images: [...level.images, image] }
             : level,
     );
+}
+
+export function ingestJsonFile(json: Data): void {
+    LevelSignal.value = json.levels;
+    AllImages.value = json.images;
+    NextImgId.value = json.nextId;
 }

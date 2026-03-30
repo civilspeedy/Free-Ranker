@@ -4,7 +4,7 @@ import './LevelComponent.css';
 import DeleteLevel from '../buttons/DeleteLevelButton/DeleteLevelButton';
 import EditLevel from '../buttons/EditLevelButton/EditLevelButton';
 import { useEffect, useState } from 'preact/hooks';
-import { getImages } from '../../signals';
+import { LevelSignal } from '../../signals';
 
 export default function LevelComponent({
     rank,
@@ -51,8 +51,8 @@ export default function LevelComponent({
             <EditLevel index={index} />
             <DeleteLevel index={index} />
             <div id="images">
-                {getImages(index).map((image, index) => (
-                    <img src={image} key={index} />
+                {LevelSignal.value[index]?.images.map((image, i) => (
+                    <img src={image.base64} key={i} />
                 ))}
             </div>
         </div>

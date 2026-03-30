@@ -1,6 +1,9 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './UploadButton.css';
+import type { TargetedEvent } from 'preact';
+import type { Data } from '../../../types';
+import { ingestJsonFile } from '../../../signals';
 
 export default function UploadButton(): JSX.Element {
     const [state, setState] = useState(false);
@@ -15,11 +18,49 @@ export default function UploadButton(): JSX.Element {
     };
 
     const Modal = (): JSX.Element => {
+        const [file, setFile] = useState<File>();
+        const [json, setJson] = useState<Data>();
+
+        useEffect(() => {
+            if (json) ingestJsonFile(json);
+        }, [json]);
+
+        const handleUpload = (e: TargetedEvent<HTMLInputElement, Event>) => {
+            const target = e.currentTarget;
+            if (target) {
+                const files = target.files;
+                if (files) setFile(files[0]);
+            }
+        };
+
         const handleClose = (): void => setState(false);
-        const handleSubmit = (): void => {};
+
+        const readFile = async (f: File): Promise<Data> => {
+            return new Promise<Data>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsText(f);
+
+                reader.onload = () => {
+                    const jsonStr = reader.result as string;
+                    resolve(JSON.parse(jsonStr) as Data);
+                };
+
+                reader.onerror = (e) => reject(e);
+            });
+        };
+
+        const handleSubmit = async (): Promise<void> => {
+            if (file) {
+                try {
+                    setJson(await readFile(file));
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+        };
         return (
             <div className="upload-modal">
-                <input type="file" accept=".json" />
+                <input type="file" accept=".json" onChange={handleUpload} />
                 <div id="option-div">
                     <a className="button" onClick={handleSubmit}>
                         Submit

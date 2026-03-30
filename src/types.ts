@@ -15,3 +15,9 @@ export type RankAndImageIndex = {
     readonly rank: number;
     readonly image: number;
 };
+
+export type Data = {
+    readonly images: Image[];
+    readonly levels: LevelData[];
+    readonly nextId: number;
+};

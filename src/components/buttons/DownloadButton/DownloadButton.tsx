@@ -1,13 +1,14 @@
 import type { JSX } from 'preact/jsx-runtime';
 import { AllImages, LevelSignal, NextImgId } from '../../../signals';
+import type { Data } from '../../../types';
 
 export default function DownloadButton(): JSX.Element {
     const handleClick = (): void => {
-        const data = {
+        const data: Data = {
             images: AllImages.value,
-            level: LevelSignal.value,
+            levels: LevelSignal.value,
             nextId: NextImgId.value,
-        } as const;
+        };
 
         const blob = new Blob([JSON.stringify(data)], {
             type: 'application/json',

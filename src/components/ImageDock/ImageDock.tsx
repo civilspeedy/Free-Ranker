@@ -2,54 +2,13 @@ import type { TargetedEvent } from 'preact';
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './ImageDock.css';
-import { addImage, AllImages, NextImgId, ranks } from '../../signals';
+import { AllImages, NextImgId } from '../../signals';
 import type { Image } from '../../types';
 import imageCompression from 'browser-image-compression';
 import { signal } from '@preact/signals';
+import ImageComponent from './Image';
 
 const loading = signal<boolean>(false);
-
-type ImageProps = { readonly source: Image };
-const Image = ({ source }: ImageProps): JSX.Element => {
-    const [state, setState] = useState(false);
-    const [selection, setSelection] = useState(ranks.value[0]);
-
-    const handleClick = (): void => {
-        setState((prev) => !prev);
-    };
-
-    const handleSelect = (e: TargetedEvent<HTMLSelectElement, Event>): void => {
-        setSelection(e.currentTarget.value);
-    };
-
-    const handleOk = (): void => {
-        addImage(selection, source);
-    };
-
-    return (
-        <div className="image-capsule">
-            <img
-                className="dock-image"
-                src={source.base64}
-                onClick={handleClick}
-            />
-            <div>
-                {state && (
-                    <>
-                        <select value={selection} onChange={handleSelect}>
-                            {ranks.value.map((rank, index) => (
-                                <option key={index} value={rank}>
-                                    {rank}
-                                </option>
-                            ))}
-                        </select>
-                        <a onClick={handleOk}>Ok</a>
-                    </>
-                )}
-            </div>
-        </div>
-    );
-};
 
 export default function ImageDock(): JSX.Element {
     const [images, setImages] = useState<Image[]>([]);
@@ -89,6 +48,7 @@ export default function ImageDock(): JSX.Element {
         }
 
         loading.value = false;
+
         const images: Image[] = results.map((base64) => {
             const id = NextImgId.value;
             NextImgId.value = id + 1;
@@ -109,7 +69,11 @@ export default function ImageDock(): JSX.Element {
                 <input
                     multiple
                     type="file"
-                    accept=".png,.jpg,.jpeg,.svg,.webp,.gif"
+                    accept={
+                        doCompress
+                            ? '.png,.jpg,.jpeg,.svg,.webp'
+                            : '.png,.jpg,.jpeg,.svg,.webp,.gif'
+                    }
                     onChange={handleInput}
                 />
                 <label>
@@ -119,12 +83,13 @@ export default function ImageDock(): JSX.Element {
                         onChange={handleCheckbox}
                         checked={doCompress}
                     />
+                    (Will break gifs)
                 </label>
             </div>
             {loading.value && <p>compressing...</p>}
             <div id="images">
-                {images.map((image, index) => (
-                    <Image source={image} key={index} />
+                {AllImages.value.map((image, index) => (
+                    <ImageComponent source={image} key={index} />
                 ))}
             </div>
         </div>
