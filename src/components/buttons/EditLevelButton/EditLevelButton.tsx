@@ -1,6 +1,7 @@
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './EditLevelButton.css';
+import editIcon from '../../../../public/edit-2.svg';
 import {
     changeColour,
     changeFontColour,
@@ -21,9 +22,14 @@ export default function EditLevel({ index }: EditLevelProps): JSX.Element {
     const Button = (): JSX.Element => {
         const handleClick = () => setState((prev) => !prev);
         return (
-            <a id="edit-level-button" onClick={handleClick}>
-                Edit
-            </a>
+            <img
+                className="button"
+                style={{ opacity: 0.5 }}
+                onClick={handleClick}
+                src={editIcon}
+                title="edit"
+                alt="edit"
+            />
         );
     };
 

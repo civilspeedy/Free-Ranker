@@ -1,6 +1,7 @@
 import type { JSX } from 'preact/jsx-runtime';
 import { AllImages, LevelSignal, NextImgId } from '../../../signals';
 import type { Data } from '../../../types';
+import downloadIcon from '../../../../public/download.svg';
 
 export default function DownloadButton(): JSX.Element {
     const handleClick = (): void => {
@@ -22,8 +23,12 @@ export default function DownloadButton(): JSX.Element {
         URL.revokeObjectURL(url);
     };
     return (
-        <a onClick={handleClick} className="bright-button">
-            Download Schema
-        </a>
+        <img
+            onClick={handleClick}
+            className="bright-button"
+            src={downloadIcon}
+            title="download json"
+            alt="download json"
+        />
     );
 }

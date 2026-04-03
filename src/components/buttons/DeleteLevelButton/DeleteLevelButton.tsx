@@ -2,6 +2,7 @@ import type { JSX } from 'preact/jsx-runtime';
 import { getImages, removeLevel } from '../../../signals';
 import './DeleteLevelButton.css';
 import { useState } from 'preact/hooks';
+import deleteIcon from '../../../../public/trash-2.svg';
 
 type DeleteLevelProps = {
     readonly index: number;
@@ -19,9 +20,14 @@ export default function DeleteLevel({ index }: DeleteLevelProps): JSX.Element {
         };
 
         return (
-            <a className="button" onClick={handleClick}>
-                Delete
-            </a>
+            <img
+                className="button"
+                onClick={handleClick}
+                src={deleteIcon}
+                alt="delete"
+                title="delete"
+                style={{ opacity: 0.5 }}
+            />
         );
     };
 

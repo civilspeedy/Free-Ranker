@@ -4,6 +4,7 @@ import './UploadButton.css';
 import type { TargetedEvent } from 'preact';
 import type { Data } from '../../../types';
 import { ingestJsonFile } from '../../../signals';
+import uploadIcon from '../../../../public/upload.svg';
 
 export default function UploadButton(): JSX.Element {
     const [state, setState] = useState(false);
@@ -11,9 +12,13 @@ export default function UploadButton(): JSX.Element {
     const Button = (): JSX.Element => {
         const handleClick = (): void => setState((prev) => !prev);
         return (
-            <a className="upload-button" onClick={handleClick}>
-                Upload Schema
-            </a>
+            <img
+                className="upload-button"
+                onClick={handleClick}
+                src={uploadIcon}
+                title="upload json"
+                alt="upload json"
+            />
         );
     };
 

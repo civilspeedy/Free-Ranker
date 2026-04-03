@@ -6,6 +6,7 @@ import UploadButton from './components/buttons/UploadButton/UploadButton';
 import LevelComponent from './components/LevelComponent/LevelComponent';
 import DownloadButton from './components/buttons/DownloadButton/DownloadButton';
 import ImageDock from './components/ImageDock/ImageDock';
+import CreateImage from './components/buttons/CreateImageButton/CreateImageButton';
 
 export default function App() {
     useEffect(() => {
@@ -16,6 +17,7 @@ export default function App() {
             <div className="top-corner">
                 <UploadButton />
                 <DownloadButton />
+                <CreateImage />
             </div>
             {LevelSignal.value.map((level, index) => (
                 <LevelComponent

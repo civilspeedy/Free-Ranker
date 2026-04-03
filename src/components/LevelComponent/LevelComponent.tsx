@@ -38,18 +38,36 @@ export default function LevelComponent({
 
     return (
         <div id="level">
-            <p
+            <div
                 className="level-rank"
                 style={{
                     backgroundColor: colour,
-                    fontSize: rank.length < 4 ? null : rankSize,
-                    color: fontColour,
                 }}
             >
-                {rank}
-            </p>
-            <EditLevel index={index} />
-            <DeleteLevel index={index} />
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: 10,
+                    }}
+                >
+                    <EditLevel index={index} />
+                    <DeleteLevel index={index} />
+                </div>
+                <p
+                    style={{
+                        fontSize: rank.length < 4 ? null : rankSize,
+                        color: fontColour,
+                        margin: 0,
+                        alignSelf: 'center',
+                        userSelect: 'none',
+                    }}
+                >
+                    {' '}
+                    {rank}
+                </p>
+            </div>
+
             <div id="images">
                 {LevelSignal.value[index]?.images.map((image, i) => (
                     <img src={image.base64} key={i} />

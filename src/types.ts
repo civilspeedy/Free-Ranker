@@ -6,18 +6,18 @@ export type LevelData = {
     readonly index: number;
 };
 
-export type Image = {
-    readonly id: number;
-    readonly base64: string;
-};
+export type Image = Readonly<{
+    id: number;
+    base64: string;
+}>;
 
-export type RankAndImageIndex = {
-    readonly rank: number;
-    readonly image: number;
-};
+export type RankAndImageIndex = Readonly<{
+    rank: number;
+    image: number;
+}>;
 
-export type Data = {
-    readonly images: Image[];
-    readonly levels: LevelData[];
-    readonly nextId: number;
-};
+export type Data = Readonly<{
+    images: Image[];
+    levels: LevelData[];
+    nextId: number;
+}>;
