@@ -9,6 +9,7 @@
 .level-rank {
     margin: 0;
     width: fit-content;
+
     font-size: 10vh;
     padding: 3vh;
     text-wrap: pretty;

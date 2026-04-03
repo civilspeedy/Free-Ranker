@@ -4,7 +4,7 @@ import './UploadButton.css';
 import type { TargetedEvent } from 'preact';
 import type { Data } from '../../../types';
 import { ingestJsonFile } from '../../../signals';
-import uploadIcon from '../../../../public/upload.svg';
+import uploadIcon from '../../../assets/upload.svg';
 
 export default function UploadButton(): JSX.Element {
     const [state, setState] = useState(false);

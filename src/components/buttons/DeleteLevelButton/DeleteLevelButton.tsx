@@ -2,7 +2,7 @@ import type { JSX } from 'preact/jsx-runtime';
 import { getImages, removeLevel } from '../../../signals';
 import './DeleteLevelButton.css';
 import { useState } from 'preact/hooks';
-import deleteIcon from '../../../../public/trash-2.svg';
+import deleteIcon from '../../../assets/trash-2.svg';
 
 type DeleteLevelProps = {
     readonly index: number;

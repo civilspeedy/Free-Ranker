@@ -1,7 +1,7 @@
 import type { JSX } from 'preact/jsx-runtime';
 import { AllImages, LevelSignal, NextImgId } from '../../../signals';
 import type { Data } from '../../../types';
-import downloadIcon from '../../../../public/download.svg';
+import downloadIcon from '../../../assets/download.svg';
 
 export default function DownloadButton(): JSX.Element {
     const handleClick = (): void => {

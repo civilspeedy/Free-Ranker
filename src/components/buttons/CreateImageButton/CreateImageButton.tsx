@@ -2,7 +2,7 @@
 import { render } from 'preact';
 import html2canvas from 'html2canvas';
 import type { JSX } from 'preact/jsx-runtime';
-import imageIcon from '../../../../public/image.svg';
+import imageIcon from '../../../assets/image.svg';
 import { CaptureComponent } from '../../CaptureComponent/CaptureComponent';
 
 import './CreateImageButton.css';

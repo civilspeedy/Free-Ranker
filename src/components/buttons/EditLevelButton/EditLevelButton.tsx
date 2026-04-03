@@ -1,7 +1,10 @@
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './EditLevelButton.css';
-import editIcon from '../../../../public/edit-2.svg';
+import editIcon from '../../../assets/edit-2.svg';
+import acceptIcon from '../../../assets/check-circle.svg';
+import cancelIcon from '../../../assets/x-circle.svg';
+
 import {
     changeColour,
     changeFontColour,
@@ -89,12 +92,18 @@ export default function EditLevel({ index }: EditLevelProps): JSX.Element {
                     />
                 </label>
                 <div className="options">
-                    <a className="button" onClick={handleConfirm}>
-                        Confirm
-                    </a>
-                    <a className="button" onClick={handleCancel}>
-                        Cancel
-                    </a>
+                    <img
+                        className="button"
+                        onClick={handleConfirm}
+                        src={acceptIcon}
+                        title="accept"
+                    />
+                    <img
+                        title="cancel"
+                        className="button"
+                        onClick={handleCancel}
+                        src={cancelIcon}
+                    />
                 </div>
             </div>
         );
