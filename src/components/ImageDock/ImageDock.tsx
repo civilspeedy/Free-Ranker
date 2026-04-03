@@ -10,6 +10,8 @@ import ImageComponent from './Image';
 
 const loading = signal<boolean>(false);
 
+// make this a pop up window
+// Next: image delete
 export default function ImageDock(): JSX.Element {
     const [images, setImages] = useState<Image[]>([]);
     const [doCompress, setDoCompress] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import type { Image } from '../../types';
-import { addImage, ranks } from '../../signals';
+import { addImage, CurrentlyHovered, ranks } from '../../signals';
 import type { JSX } from 'preact/jsx-runtime';
 import type { TargetedEvent } from 'preact';
 
@@ -21,12 +21,22 @@ export default function ImageComponent({ source }: ImageProps): JSX.Element {
         addImage(selection, source);
     };
 
+    const onHover = (): void => {
+        CurrentlyHovered.value = source;
+    };
+
+    const onStopHovering = (): void => {
+        CurrentlyHovered.value = null;
+    };
+
     return (
         <div className="image-capsule">
             <img
                 className="dock-image"
                 src={source.base64}
                 onClick={handleClick}
+                onMouseEnter={onHover}
+                onMouseLeave={onStopHovering}
             />
             <div>
                 {state && (

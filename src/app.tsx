@@ -19,18 +19,19 @@ export default function App() {
                 <DownloadButton />
                 <CreateImage />
             </div>
-            {LevelSignal.value.map((level, index) => (
-                <LevelComponent
-                    index={index}
-                    key={index}
-                    fontColour={level.fontColour}
-                    rank={level.rank}
-                    images={level.images}
-                    colour={level.colour}
-                />
-            ))}
+            <div id="level-div">
+                {LevelSignal.value.map((level, index) => (
+                    <LevelComponent
+                        index={index}
+                        key={index}
+                        fontColour={level.fontColour}
+                        rank={level.rank}
+                        images={level.images}
+                        colour={level.colour}
+                    />
+                ))}
+            </div>
             <AddLevelButton />
-
             <ImageDock />
         </>
     );

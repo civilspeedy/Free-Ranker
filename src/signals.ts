@@ -4,6 +4,7 @@ import type { Data, Image, LevelData, RankAndImageIndex } from './types';
 export const LevelSignal = signal<LevelData[]>([]);
 export const AllImages = signal<Image[]>([]);
 export const NextImgId = signal<number>(0);
+export const CurrentlyHovered = signal<Image | null>(null);
 
 const DEFUALT_COLOURS = {
     gold: true,
@@ -175,3 +176,14 @@ export function ingestJsonFile(json: Data): void {
     AllImages.value = json.images;
     NextImgId.value = json.nextId;
 }
+
+window.addEventListener('keydown', (e) => {
+    if (CurrentlyHovered.value !== null) {
+        const targetLevel = Number.parseInt(e.key) - 1;
+        if (
+            Number.isInteger(targetLevel) ||
+            targetLevel <= LevelSignal.value.length
+        )
+            addImage(getRank(targetLevel), CurrentlyHovered.value);
+    }
+});

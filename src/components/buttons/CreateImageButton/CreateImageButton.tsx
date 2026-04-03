@@ -1,4 +1,3 @@
-// CreateImageButton.tsx
 import { render } from 'preact';
 import html2canvas from 'html2canvas';
 import type { JSX } from 'preact/jsx-runtime';

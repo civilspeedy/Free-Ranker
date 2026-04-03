@@ -3,6 +3,8 @@ import { getImages, removeLevel } from '../../../signals';
 import './DeleteLevelButton.css';
 import { useState } from 'preact/hooks';
 import deleteIcon from '../../../assets/trash-2.svg';
+import confirmIcon from '../../../assets/check-circle.svg';
+import cancelIcon from '../../../assets/x-circle.svg';
 
 type DeleteLevelProps = {
     readonly index: number;
@@ -43,14 +45,21 @@ export default function DeleteLevel({ index }: DeleteLevelProps): JSX.Element {
 
         return (
             <div className="modal">
-                <p>Are you sure?</p>
+                <label>Are you sure?</label>
                 <div className="options">
-                    <a className="button" onClick={handleYes}>
-                        Yes
-                    </a>
-                    <a className="button" onClick={handleNo}>
-                        No
-                    </a>
+                    <img
+                        className="button"
+                        onClick={handleYes}
+                        src={confirmIcon}
+                        title="confirm"
+                    />
+
+                    <img
+                        className="button"
+                        onClick={handleNo}
+                        src={cancelIcon}
+                        title="cancel"
+                    />
                 </div>
             </div>
         );
