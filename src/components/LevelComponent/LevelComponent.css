@@ -10,10 +10,7 @@
 .level-rank {
     margin: 0;
     width: fit-content;
-
-    font-size: 10vh;
-    padding: 3vh;
-    text-wrap: pretty;
+    font-size: 8vh;
 }
 
 #images {
@@ -21,9 +18,10 @@
     height: auto;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #images img {
-    height: 20vh;
+    height: 10vh;
     width: auto;
 }

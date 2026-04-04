@@ -104,7 +104,7 @@ export default function ImageDock(): JSX.Element {
                 </label>
             </div>
             {loading.value && <p>compressing...</p>}
-            <div id="images">
+            <div id="dock-images">
                 {images.map((image, index) => (
                     <ImageComponent source={image} key={index} />
                 ))}

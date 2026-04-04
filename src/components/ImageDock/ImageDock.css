@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-#images {
+#dock-images {
     display: flex;
     flex-direction: row;
     gap: 10px;
