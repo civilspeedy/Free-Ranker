@@ -5,6 +5,8 @@ import type { TargetedEvent } from 'preact';
 import type { Data } from '../../../types';
 import { ingestJsonFile } from '../../../signals';
 import uploadIcon from '../../../assets/upload.svg';
+import confrimIcon from '../../../assets/check-circle.svg';
+import cancelIcon from '../../../assets/x-circle.svg';
 
 export default function UploadButton(): JSX.Element {
     const [state, setState] = useState(false);
@@ -67,12 +69,18 @@ export default function UploadButton(): JSX.Element {
             <div className="upload-modal">
                 <input type="file" accept=".json" onChange={handleUpload} />
                 <div id="option-div">
-                    <a className="button" onClick={handleSubmit}>
-                        Submit
-                    </a>
-                    <a className="button" onClick={handleClose}>
-                        Close
-                    </a>
+                    <img
+                        className="button"
+                        onClick={handleSubmit}
+                        title="confirm"
+                        src={confrimIcon}
+                    />
+                    <img
+                        className="button"
+                        onClick={handleClose}
+                        title="cancel"
+                        src={cancelIcon}
+                    />
                 </div>
             </div>
         );
