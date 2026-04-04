@@ -37,12 +37,7 @@ export default function ImageDock(): JSX.Element {
         });
     };
 
-    const handleInput = async (
-        e: TargetedEvent<HTMLInputElement, Event>,
-    ): Promise<void> => {
-        const files = e.currentTarget.files;
-        if (!files) return;
-
+    const imageInput = async (files: FileList): Promise<void> => {
         let results: string[];
         if (doCompress) {
             const compressed = await Promise.all(
@@ -65,12 +60,28 @@ export default function ImageDock(): JSX.Element {
         setImages((prev) => [...prev, ...images]);
     };
 
+    const handleInput = async (
+        e: TargetedEvent<HTMLInputElement, Event>,
+    ): Promise<void> => {
+        const files = e.currentTarget.files;
+        if (!files) return;
+        await imageInput(files);
+    };
+
     const handleCheckbox = (): void => {
         setDoCompress((prev) => !prev);
     };
 
+    const handlePaste = async (e: ClipboardEvent): Promise<void> => {
+        const data = e.clipboardData;
+        if (!data) return;
+
+        const files = data.files;
+        await imageInput(files);
+    };
+
     return (
-        <div id="image-dock">
+        <div id="image-dock" onPaste={handlePaste} tabIndex={0}>
             <div>
                 <input
                     multiple
