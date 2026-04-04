@@ -1,10 +1,10 @@
 import { useRef, useEffect } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import type { LevelData } from '../../types';
+import '../LevelComponent/LevelComponent.css';
 
 type CaptureComponentProps = {
     levels: LevelData[];
-    resolution: { width: number; height: number };
     onMounted: (el: HTMLElement) => void;
 };
 
@@ -22,11 +22,14 @@ function CaptureLevel({
     images,
 }: CaptureLevelProps): JSX.Element {
     return (
-        <div>
-            <p style={{ color: fontColour, backgroundColor: backgroundColour }}>
+        <div id="level">
+            <p
+                className="level-rank"
+                style={{ color: fontColour, backgroundColor: backgroundColour }}
+            >
                 {rank}
             </p>
-            <div>
+            <div id="images">
                 {images.map((image, index) => (
                     <img src={image} key={index} />
                 ))}
@@ -37,7 +40,6 @@ function CaptureLevel({
 
 export function CaptureComponent({
     levels,
-    resolution,
     onMounted,
 }: CaptureComponentProps): JSX.Element {
     const ref = useRef<HTMLDivElement>(null);
@@ -47,10 +49,7 @@ export function CaptureComponent({
     }, []);
 
     return (
-        <div
-            ref={ref}
-            style={{ width: resolution.width, height: resolution.height }}
-        >
+        <div id="capture-component" ref={ref}>
             {levels.map((level, index) => (
                 <CaptureLevel
                     key={index}

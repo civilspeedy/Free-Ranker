@@ -1,4 +1,3 @@
-import { useEffect } from 'preact/hooks';
 import './app.css';
 import AddLevelButton from './components/buttons/AddLevelButton/AddLevelButton';
 import { LevelSignal } from './signals';
@@ -7,17 +6,16 @@ import LevelComponent from './components/LevelComponent/LevelComponent';
 import DownloadButton from './components/buttons/DownloadButton/DownloadButton';
 import ImageDock from './components/ImageDock/ImageDock';
 import CreateImage from './components/buttons/CreateImageButton/CreateImageButton';
+import CopyImage from './components/buttons/CopyImageButton/CopyImageButton';
 
 export default function App() {
-    useEffect(() => {
-        console.log(LevelSignal.value.length);
-    }, [LevelSignal.value]);
     return (
         <>
             <div className="top-corner">
                 <UploadButton />
                 <DownloadButton />
                 <CreateImage />
+                <CopyImage />
             </div>
             <div id="level-div">
                 {LevelSignal.value.map((level, index) => (

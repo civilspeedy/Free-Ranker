@@ -1,0 +1,29 @@
+#capture-component {
+    width: 1920px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+#capture-level {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    height: 20vh;
+    border: 2px solid black;
+}
+
+#capture-level p {
+    width: fit-content;
+    font-size: 20vh;
+}
+
+#capture-images {
+    display: flex;
+    flex-direction: row;
+}
+
+#capture-images img {
+    height: 20vh;
+    width: auto;
+}

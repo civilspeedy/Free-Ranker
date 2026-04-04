@@ -1,13 +1,12 @@
-import { render } from 'preact';
-import html2canvas from 'html2canvas';
 import type { JSX } from 'preact/jsx-runtime';
-import imageIcon from '../../../assets/image.svg';
+import copyIcon from '../../../assets/clipboard.svg';
+import { render } from 'preact';
 import { CaptureComponent } from '../../CaptureComponent/CaptureComponent';
-
-import './CreateImageButton.css';
 import { LevelSignal } from '../../../signals';
+import html2canvas from 'html2canvas';
+import './CopyImageButton.css';
 
-export default function CreateImageButton(): JSX.Element {
+export default function CopyImage(): JSX.Element {
     const handleClick = async (): Promise<void> => {
         const container = document.createElement('div');
         container.style.cssText =
@@ -15,37 +14,34 @@ export default function CreateImageButton(): JSX.Element {
         document.body.appendChild(container);
 
         await new Promise<void>((resolve) => {
-            // not going to pretend I wrote this, thanks claud - hope you're enjoying the open sourcing
             render(
                 <CaptureComponent
                     levels={LevelSignal.value}
-                    onMounted={async (el) => {
-                        const canvas = await html2canvas(el, {
+                    onMounted={async (e) => {
+                        const canvas = await html2canvas(e, {
                             scale: 2,
                             useCORS: true,
                             backgroundColor: '#ffffff',
                         });
-
-                        const link = document.createElement('a');
-                        link.download = 'tierlist.jpeg';
-                        link.href = canvas.toDataURL('image/jpeg');
-                        link.click();
-
-                        render(null, container);
-                        document.body.removeChild(container);
-                        resolve();
+                        canvas.toBlob(async (blob) => {
+                            await navigator.clipboard.write([
+                                new ClipboardItem({
+                                    'image/png': blob as Blob,
+                                }),
+                            ]);
+                            resolve();
+                        });
                     }}
                 />,
                 container,
             );
         });
     };
-
     return (
         <img
-            title="create image"
-            src={imageIcon}
-            className="create-button"
+            className="copy-button"
+            src={copyIcon}
+            title="copy image"
             onClick={handleClick}
         />
     );
