@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import type { LevelData } from '../../types';
 import '../LevelComponent/LevelComponent.css';
+import './CaptureComponent.css';
 
 type CaptureComponentProps = {
     levels: LevelData[];
