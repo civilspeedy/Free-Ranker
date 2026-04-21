@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import type { Image } from '../../types';
-import { addImage, CurrentlyHovered, ranks } from '../../signals';
+import { addImage, CurrentlyHoveredSignal, ranks } from '../../signals';
 import type { JSX } from 'preact/jsx-runtime';
 import type { TargetedEvent } from 'preact';
 
@@ -22,11 +22,11 @@ export default function ImageComponent({ source }: ImageProps): JSX.Element {
     };
 
     const onHover = (): void => {
-        CurrentlyHovered.value = source;
+        CurrentlyHoveredSignal.value = source;
     };
 
     const onStopHovering = (): void => {
-        CurrentlyHovered.value = null;
+        CurrentlyHoveredSignal.value = null;
     };
 
     return (
@@ -48,7 +48,9 @@ export default function ImageComponent({ source }: ImageProps): JSX.Element {
                                 </option>
                             ))}
                         </select>
-                        <a onClick={handleOk}>Ok</a>
+                        <button className="bright-button" onClick={handleOk}>
+                            Ok
+                        </button>
                     </>
                 )}
             </div>

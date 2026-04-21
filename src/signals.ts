@@ -2,9 +2,9 @@ import { computed, signal } from '@preact/signals';
 import type { Data, Image, LevelData, RankAndImageIndex } from './types';
 
 export const LevelSignal = signal<LevelData[]>([]);
-export const AllImages = signal<Image[]>([]);
-export const NextImgId = signal<number>(0);
-export const CurrentlyHovered = signal<Image | null>(null);
+export const ImagesSignal = signal<Image[]>([]);
+export const NextImgIdSignal = signal<number>(0);
+export const CurrentlyHoveredSignal = signal<Image | null>(null);
 
 const DEFUALT_COLOURS = {
     gold: true,
@@ -172,18 +172,82 @@ export function addImage(rank: string, image: Image): void {
 }
 
 export function ingestJsonFile(json: Data): void {
-    LevelSignal.value = json.levels;
-    AllImages.value = json.images;
-    NextImgId.value = json.nextId;
+    assignAllData(json);
 }
 
 window.addEventListener('keydown', (e) => {
-    if (CurrentlyHovered.value !== null) {
+    if (CurrentlyHoveredSignal.value !== null) {
         const targetLevel = Number.parseInt(e.key) - 1;
         if (
             Number.isInteger(targetLevel) ||
             targetLevel <= LevelSignal.value.length
         )
-            addImage(getRank(targetLevel), CurrentlyHovered.value);
+            addImage(getRank(targetLevel), CurrentlyHoveredSignal.value);
     }
 });
+
+const SESSION_DATA_KEY = 'session_data';
+const TWO_MINUTES = 120000;
+const LOCAL_DATA_KEY = 'local_data';
+
+function getAllData(): Data {
+    return {
+        levels: LevelSignal.value,
+        images: ImagesSignal.value,
+        nextId: NextImgIdSignal.value,
+    };
+}
+
+function assignAllData(allData: Data): void {
+    LevelSignal.value = allData.levels;
+    ImagesSignal.value = allData.images;
+    NextImgIdSignal.value = allData.nextId;
+}
+
+export function storeInSession(): void {
+    try {
+        const allData = getAllData();
+        const allDataString = JSON.stringify(allData);
+        sessionStorage.setItem(SESSION_DATA_KEY, allDataString);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+export function getFromSession(): void {
+    try {
+        const allDataString = sessionStorage.getItem(SESSION_DATA_KEY);
+        if (allDataString !== null) {
+            const allData = JSON.parse(allDataString);
+            assignAllData(allData);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+setInterval(() => storeInSession(), TWO_MINUTES);
+
+window.onload = () => getFromSession();
+
+export function storeInLocal(): void {
+    try {
+        const allData = getAllData();
+        const allDataString = JSON.stringify(allData);
+        localStorage.setItem(LOCAL_DATA_KEY, allDataString);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+export function getFromLocal(): void {
+    try {
+        const allDataString = localStorage.getItem(LOCAL_DATA_KEY);
+        if (allDataString !== null) {
+            const allData = JSON.parse(allDataString);
+            assignAllData(allData);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}

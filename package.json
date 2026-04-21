@@ -13,6 +13,9 @@
         "@preact/signals": "^2.9.0",
         "browser-image-compression": "^2.0.2",
         "eslint": "^10.2.1",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "html2canvas": "^1.4.1",
         "preact": "^10.29.1",
         "typescript-eslint": "^8.59.0"

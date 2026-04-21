@@ -2,7 +2,7 @@ import type { TargetedEvent } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
 import './ImageDock.css';
-import { AllImages, NextImgId } from '../../signals';
+import { ImagesSignal, NextImgIdSignal } from '../../signals';
 import type { Image } from '../../types';
 import imageCompression from 'browser-image-compression';
 import { signal } from '@preact/signals';
@@ -17,8 +17,8 @@ export default function ImageDock(): JSX.Element {
     const [doCompress, setDoCompress] = useState(false);
 
     useEffect(() => {
-        setImages(AllImages.value);
-    }, [AllImages.value]);
+        setImages(ImagesSignal.value);
+    }, [ImagesSignal.value]);
 
     const toBase64 = (file: File): Promise<string> => {
         return new Promise<string>((resolve, reject) => {
@@ -51,12 +51,12 @@ export default function ImageDock(): JSX.Element {
         loading.value = false;
 
         const images: Image[] = results.map((base64) => {
-            const id = NextImgId.value;
-            NextImgId.value = id + 1;
+            const id = NextImgIdSignal.value;
+            NextImgIdSignal.value = id + 1;
             return { id, base64 };
         });
 
-        AllImages.value = [...AllImages.value, ...images];
+        ImagesSignal.value = [...ImagesSignal.value, ...images];
         setImages((prev) => [...prev, ...images]);
     };
 
