@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
-import './UploadButton.css';
+
 import type { TargetedEvent } from 'preact';
 import type { Data } from '../../../types';
 import { ingestJsonFile } from '../../../signals';
@@ -15,7 +15,7 @@ export default function UploadButton(): JSX.Element {
         const handleClick = (): void => setState((prev) => !prev);
         return (
             <img
-                className="upload-button"
+                className="bright-button"
                 onClick={handleClick}
                 src={uploadIcon}
                 title="upload json"
@@ -66,9 +66,9 @@ export default function UploadButton(): JSX.Element {
             }
         };
         return (
-            <div className="upload-modal">
+            <div className="modal" style={{ top: '50%', right: '43%', alignSelf: 'center' }}>
                 <input type="file" accept=".json" onChange={handleUpload} />
-                <div id="option-div">
+                <div className="options">
                     <img
                         className="button"
                         onClick={handleSubmit}

@@ -77,3 +77,15 @@ a {
     align-items: center;
     align-self: center;
 }
+
+.glow-button {
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0px;
+    -webkit-box-shadow: 0px 0px 21px 2px rgba(255, 219, 74, 0.9);
+    -moz-box-shadow: 0px 0px 21px 2px rgba(255, 219, 74, 0.9);
+    box-shadow: 0px 0px 21px 2px rgba(255, 219, 74, 0.9);
+}

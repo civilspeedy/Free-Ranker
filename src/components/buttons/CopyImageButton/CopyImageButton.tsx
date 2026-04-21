@@ -4,7 +4,6 @@ import { render } from 'preact';
 import { CaptureComponent } from '../../CaptureComponent/CaptureComponent';
 import { LevelSignal } from '../../../signals';
 import html2canvas from 'html2canvas';
-import './CopyImageButton.css';
 
 export default function CopyImage(): JSX.Element {
     const handleClick = async (): Promise<void> => {
@@ -39,7 +38,7 @@ export default function CopyImage(): JSX.Element {
     };
     return (
         <img
-            className="copy-button"
+            className="bright-button"
             src={copyIcon}
             title="copy image"
             onClick={handleClick}

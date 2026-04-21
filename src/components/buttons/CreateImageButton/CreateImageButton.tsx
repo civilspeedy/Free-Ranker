@@ -3,8 +3,6 @@ import html2canvas from 'html2canvas';
 import type { JSX } from 'preact/jsx-runtime';
 import imageIcon from '../../../assets/image.svg';
 import { CaptureComponent } from '../../CaptureComponent/CaptureComponent';
-
-import './CreateImageButton.css';
 import { LevelSignal } from '../../../signals';
 
 export default function CreateImageButton(): JSX.Element {
@@ -45,7 +43,7 @@ export default function CreateImageButton(): JSX.Element {
         <img
             title="create image"
             src={imageIcon}
-            className="create-button"
+            className="bright-button"
             onClick={handleClick}
         />
     );

@@ -1,6 +1,5 @@
 import type { JSX } from 'preact/jsx-runtime';
 import { getImages, removeLevel } from '../../../signals';
-import './DeleteLevelButton.css';
 import { useState } from 'preact/hooks';
 import deleteIcon from '../../../assets/trash-2.svg';
 import confirmIcon from '../../../assets/check-circle.svg';

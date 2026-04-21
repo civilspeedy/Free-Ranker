@@ -1,5 +1,4 @@
 import type { JSX } from 'preact/jsx-runtime';
-import './AddLevelButton.css';
 import { addLevel } from '../../../signals';
 import addIcon from '../../../assets/plus-circle.svg';
 
@@ -11,7 +10,7 @@ export default function AddLevelButton(): JSX.Element {
     return (
         <img
             src={addIcon}
-            className="add-level-button"
+            className="glow-button"
             onClick={handleClick}
             title="add level"
         />

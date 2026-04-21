@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks';
 import type { JSX } from 'preact/jsx-runtime';
-import './EditLevelButton.css';
 import editIcon from '../../../assets/edit-2.svg';
 import acceptIcon from '../../../assets/check-circle.svg';
 import cancelIcon from '../../../assets/x-circle.svg';
