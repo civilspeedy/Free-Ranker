@@ -5,7 +5,7 @@ import { CaptureComponent } from '../../CaptureComponent/CaptureComponent';
 import { LevelSignal } from '../../../signals';
 import html2canvas from 'html2canvas';
 
-export default function CopyImage(): JSX.Element {
+export default function CopyImageButton(): JSX.Element {
     const handleClick = async (): Promise<void> => {
         const container = document.createElement('div');
         container.style.cssText =

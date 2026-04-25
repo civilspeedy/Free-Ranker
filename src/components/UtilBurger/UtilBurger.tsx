@@ -4,8 +4,9 @@ import BurgerIcon from '../../assets/menu.svg';
 import UploadButton from '../buttons/UploadButton/UploadButton';
 import DownloadButton from '../buttons/DownloadButton/DownloadButton';
 import CreateImageButton from '../buttons/CreateImageButton/CreateImageButton';
-import CopyImage from '../buttons/CopyImageButton/CopyImageButton';
+import CopyImageButton from '../buttons/CopyImageButton/CopyImageButton';
 import './UtilBurger.css';
+import AboutButton from '../buttons/AboutButton/AboutButton';
 
 export default function UtilityBurger(): JSX.Element {
     const [state, setState] = useState(false);
@@ -28,7 +29,8 @@ export default function UtilityBurger(): JSX.Element {
                     <UploadButton />
                     <DownloadButton />
                     <CreateImageButton />
-                    <CopyImage />
+                    <CopyImageButton />
+                    <AboutButton />
                 </div>
             )}
         </div>

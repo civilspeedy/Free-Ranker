@@ -21,3 +21,10 @@ export type Data = Readonly<{
     levels: LevelData[];
     nextId: number;
 }>;
+
+export type ImageAndFunc = {
+    [key: string]: {
+        readonly imageSource: string;
+        readonly func: (() => void) | (() => Promise<void>);
+    };
+};
